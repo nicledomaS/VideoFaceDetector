@@ -16,13 +16,21 @@ variables:
 trigger:
 - master
 
+strategy:
+  matrix:
+    linux:
+      imageName: "ubuntu-18.04"
+    mac:
+      imageName: "macos-10.13"
+    windows:
+      imageName: "vs2017-win2016"
+  maxParallel: 3
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(imageName)
   
 steps:
 - bash: |
-    mkdir build
-    cd build
-    cmake .. -Dtest=true
-    cmake --build . -j  $JOBS_NUMBER
+    cmake -B build
+    cmake --build build -j  $JOBS_NUMBER
   displayName: 'Build project'
