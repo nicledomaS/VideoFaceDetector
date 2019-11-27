@@ -9,6 +9,7 @@ jobs:
       matrix:
         runs-on: [ubuntu-latest, macOS-latest, windows-latest]
         build_type: [Release, Debug]
+        compiler: [[gcc, g++], [clang, clang++]]
       fail-fast: false
 
     runs-on: ${{ matrix.runs-on }}
@@ -19,6 +20,6 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake .. -DCMAKE_CXX_COMPILER=g++ -DCMAKE_C_COMPILER=gcc -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        cmake .. -DCMAKE_CXX_COMPILER=${{ matrix.compiler[0] }} -DCMAKE_C_COMPILER=${{ matrix.compiler[1] }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
     - name: build
       run: cmake --build build -j 8
