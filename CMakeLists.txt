@@ -4,6 +4,8 @@ project(VideoFaceDetector)
 
 option(WITH_PROTOTYPES "Turn on build prototypes" OFF)
 
+add_subdirectory(modules/opencv)
+
 add_subdirectory(src)
 
 if(WITH_PROTOTYPES)
