@@ -25,10 +25,10 @@ public:
     explicit Detector(
             const std::string &fileName,
             double scaleFactor = 1.1,
-            int minNeighbors = 3,
+            int minNeighbors = 2,
             int flags = 0,
-            cv::Size minSize = cv::Size(),
-            cv::Size maxSize = cv::Size());
+            cv::Size minSize = cv::Size(80, 80),
+            cv::Size maxSize = cv::Size(80, 80));
 
     void detectFaces(
             std::vector<cv::Rect>& faces,

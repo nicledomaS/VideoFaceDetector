@@ -2,7 +2,7 @@
 
 #include "opencv2/highgui.hpp"
 
-#include "ApplicationImpl.h"
+#include "Application.h"
 
 int main(int argc, char** argv)
 {
@@ -10,7 +10,7 @@ int main(int argc, char** argv)
                 argc,
                 argv,
                 "{help h||}"
-                "{face_cascade|../../data/lbpcascades/lbpcascade_frontalface.xml|Path to face cascade.}"
+                "{face_cascade|C:/Users/yuriy/data/lbpcascades/lbpcascade_frontalface.xml|Path to face cascade.}"
                 "{camera|0|Camera device number.}"
                 "{apiPreference|0|Select preferred API for a capture object.}");
 
@@ -18,7 +18,7 @@ int main(int argc, char** argv)
                   "You can use Haar or LBP features.\n\n" );
     parser.printMessage();
 
-    std::make_unique<core::ApplicationImpl>(parser)->run();
+    std::make_unique<core::Application>(parser)->run();
 
     return 0;
 }
