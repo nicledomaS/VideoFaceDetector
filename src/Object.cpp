@@ -25,29 +25,29 @@ Object::~Object()
 
 void Object::start(const std::shared_ptr<VideoFrame>& frame)
 {
-    m_used = true;
-
     if(frame)
     {
         m_videoFrame = frame;
 
-        std::thread([this]()
+        std::vector<cv::Rect> faces;
+        m_detector->detectFaces(faces, m_videoFrame->frame);
+
+        for (const auto& face : faces)
         {
-            std::vector<cv::Rect> faces;
-            m_detector->detectFaces(faces, m_videoFrame->frame);
+            cv::Point p1(face.x, face.y);
+            cv::Point p2(face.x + face.width, face.y + face.height);
 
-            for (const auto& face : faces)
-            {
-                cv::Point p1(face.x, face.y);
-                cv::Point p2(face.x + face.width, face.y + face.height);
+            rectangle(m_videoFrame->frame, p1, p2, cv::Scalar( 255, 0, 255 ));
+        }
 
-                rectangle(m_videoFrame->frame, p1, p2, cv::Scalar( 255, 0, 255 ));
-            }
-
-            m_videobuffer->push(m_videoFrame);
-            m_used = false;
-        }).detach();
+        m_videobuffer->push(m_videoFrame);
+        m_used = false;
     }
+}
+
+void Object::setUsed(bool used)
+{
+    m_used = used;
 }
 
 bool Object::used() const

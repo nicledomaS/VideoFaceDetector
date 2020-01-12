@@ -1,5 +1,4 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#pragma once
 
 #include <atomic>
 #include <thread>
@@ -32,6 +31,8 @@ public:
     ~Object();
 
     void start(const std::shared_ptr<VideoFrame>& frame);
+
+    void setUsed(bool used);
     bool used() const;
 
 private:
@@ -41,4 +42,3 @@ private:
     std::shared_ptr<VideoFrame> m_videoFrame;
 };
 
-#endif // OBJECT_H

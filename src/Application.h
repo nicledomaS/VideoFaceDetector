@@ -10,7 +10,7 @@ namespace cv
 class CommandLineParser;
 class VideoCapture;
 
-}
+} // cv
 
 class VideoBuffer;
 

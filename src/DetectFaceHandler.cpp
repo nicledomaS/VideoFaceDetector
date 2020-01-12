@@ -2,6 +2,7 @@
 #include "VideoBuffer.h"
 #include "VideoFrame.h"
 #include "Object.h"
+#include "ThreadPool.h"
 
 namespace core
 {
@@ -12,8 +13,14 @@ DetectFaceHandler::DetectFaceHandler(
         size_t countObjects)
     : m_videobuffer(videobuffer),
       m_fileName(fileName),
-      m_countObjects(countObjects)
+      m_countObjects(countObjects),
+      m_threadPool(std::make_unique<ThreadPool>(countObjects))
 {
+}
+
+DetectFaceHandler::~DetectFaceHandler()
+{
+
 }
 
 void DetectFaceHandler::handle(const cv::Mat& frame)
@@ -21,11 +28,17 @@ void DetectFaceHandler::handle(const cv::Mat& frame)
     auto detectObject = getFree();
     if(detectObject)
     {
+        detectObject->setUsed(true);
+
         auto newVideoFrame = std::make_shared<VideoFrame>();
         newVideoFrame->frame = frame.clone();
         newVideoFrame->time = std::chrono::system_clock::now();
+        auto task = [detectObject, newVideoFrame]()
+        {
+            detectObject->start(newVideoFrame);
+        };
 
-        detectObject->start(newVideoFrame);
+        m_threadPool->submit(task);
     }
 }
 

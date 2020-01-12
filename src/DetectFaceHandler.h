@@ -11,13 +11,16 @@ class Object;
 namespace core
 {
 
+class ThreadPool;
+
 class DetectFaceHandler : public VideoHandler
 {
 public:
     DetectFaceHandler(
             const std::shared_ptr<VideoBuffer>& videobuffer,
             const std::string& fileName,
-            size_t countObjects = 1);
+            size_t countObjects = 4);
+    ~DetectFaceHandler();
 
     // VideoHandler interface
     void handle(const cv::Mat& frame) override;
@@ -31,6 +34,7 @@ private:
     std::string m_fileName;
     size_t m_countObjects;
     std::vector<std::shared_ptr<Object>> m_objects;
+    std::unique_ptr<ThreadPool> m_threadPool;
 };
 
 } // core
