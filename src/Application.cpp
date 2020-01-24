@@ -32,25 +32,26 @@ bool open(
 Application::Application(
         int cameraId,
         int apiRef,
-        const std::string& faceCascasdConfig)
+        const std::string& faceCascasdConfig,
+        int cascadeCount)
     : m_videoCapture(std::make_unique<cv::VideoCapture>()),
       m_videobuffer(std::make_shared<VideoBuffer>()),
       m_videoHandler(
           std::make_unique<DetectFaceHandler>(
-              m_videobuffer, faceCascasdConfig))
+              m_videobuffer, faceCascasdConfig, cascadeCount))
 {
     open(*m_videoCapture, cameraId, cv::VideoCaptureAPIs(apiRef));
 }
 
-Application::Application(
-        const std::string& fileName,
+Application::Application(const std::string& fileName,
         int apiRef,
-        const std::string &faceCascasdConfig)
+        const std::string &faceCascasdConfig,
+        int cascadeCount)
     : m_videoCapture(std::make_unique<cv::VideoCapture>()),
       m_videobuffer(std::make_shared<VideoBuffer>()),
       m_videoHandler(
           std::make_unique<DetectFaceHandler>(
-              m_videobuffer, faceCascasdConfig))
+              m_videobuffer, faceCascasdConfig, cascadeCount))
 {
     open(*m_videoCapture, fileName, cv::VideoCaptureAPIs(apiRef));
 }
