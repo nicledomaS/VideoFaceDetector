@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
 
-project(OpencvTest)
-
 set(CMAKE_CXX_STANDARD 14)
 
 set(Boost_USE_STATIC_LIBS        ON) # only find static libs

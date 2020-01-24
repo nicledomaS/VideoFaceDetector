@@ -22,15 +22,10 @@ Detector::Detector(
       m_minSize(std::move(minSize)),
       m_maxSize(std::move(maxSize))
 {
-    try {
-        if(!m_faceCascade->load(fileName))
-        {
-            std::cout << "--(!)Error loading face cascade\n";
-            throw std::runtime_error("--(!)Error loading face cascade");
-        };
-    } catch (const std::exception& ex)
+    if(!m_faceCascade->load(fileName))
     {
-        std::cout << ex.what() << std::endl;
+        std::cout << "--(!)Error loading face cascade\n";
+        throw std::runtime_error("--(!)Error loading face cascade");
     }
 }
 

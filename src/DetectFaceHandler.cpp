@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "DetectFaceHandler.h"
 #include "VideoBuffer.h"
 #include "VideoFrame.h"
@@ -20,25 +22,31 @@ DetectFaceHandler::DetectFaceHandler(
 
 DetectFaceHandler::~DetectFaceHandler()
 {
-
 }
 
 void DetectFaceHandler::handle(const cv::Mat& frame)
-{            
-    auto detectObject = getFree();
-    if(detectObject)
+{
+    try
     {
-        detectObject->setUsed(true);
-
-        auto newVideoFrame = std::make_shared<VideoFrame>();
-        newVideoFrame->frame = frame.clone();
-        newVideoFrame->time = std::chrono::system_clock::now();
-        auto task = [detectObject, newVideoFrame]()
+        auto detectObject = getFree();
+        if(detectObject)
         {
-            detectObject->start(newVideoFrame);
-        };
+            auto newVideoFrame = std::make_shared<VideoFrame>();
+            newVideoFrame->frame = frame.clone();
+            newVideoFrame->time = std::chrono::system_clock::now();
 
-        m_threadPool->submit(task);
+            detectObject->setUsed(true);
+            auto task = [detectObject, newVideoFrame]()
+            {
+                detectObject->start(newVideoFrame);
+            };
+
+            m_threadPool->submit(task);
+        }
+    }
+    catch (const std::exception& ex)
+    {
+        std::cout << ex.what() << std::endl;
     }
 }
 
@@ -59,6 +67,7 @@ std::shared_ptr<Object> DetectFaceHandler::getFree()
             return object;
         }
     }
+
     return m_objects.size() < m_countObjects ? createNewObject() : nullptr;
 }
 

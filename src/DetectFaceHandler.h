@@ -19,7 +19,7 @@ public:
     DetectFaceHandler(
             const std::shared_ptr<VideoBuffer>& videobuffer,
             const std::string& fileName,
-            size_t countObjects = 4);
+            size_t countObjects = 2);
     ~DetectFaceHandler();
 
     // VideoHandler interface

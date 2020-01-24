@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #include <boost/noncopyable.hpp>
 
@@ -22,7 +23,15 @@ class VideoHandler;
 class Application : private boost::noncopyable
 {
 public:
-    Application(const cv::CommandLineParser& parser);
+    Application(
+            int cameraId,
+            int apiRef,
+            const std::string& faceCascasdConfig);
+
+    Application::Application(
+            const std::string& fileName,
+            int apiRef,
+            const std::string &faceCascasdConfig);
     ~Application();
 
     void run();

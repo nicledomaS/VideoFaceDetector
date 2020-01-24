@@ -29,17 +29,32 @@ bool open(
 
 } // anonymous
 
-Application::Application(const cv::CommandLineParser &parser)
+Application::Application(
+        int cameraId,
+        int apiRef,
+        const std::string& faceCascasdConfig)
     : m_videoCapture(std::make_unique<cv::VideoCapture>()),
       m_videobuffer(std::make_shared<VideoBuffer>()),
       m_videoHandler(
           std::make_unique<DetectFaceHandler>(
-              m_videobuffer, parser.get<std::string>("face_cascade")))
+              m_videobuffer, faceCascasdConfig))
 {
-    int cam = parser.get<int>("camera");
-    auto apiRef = parser.get<int>("apiPreference");
-    open(*m_videoCapture, cam, cv::VideoCaptureAPIs(apiRef));
+    open(*m_videoCapture, cameraId, cv::VideoCaptureAPIs(apiRef));
 }
+
+Application::Application(
+        const std::string& fileName,
+        int apiRef,
+        const std::string &faceCascasdConfig)
+    : m_videoCapture(std::make_unique<cv::VideoCapture>()),
+      m_videobuffer(std::make_shared<VideoBuffer>()),
+      m_videoHandler(
+          std::make_unique<DetectFaceHandler>(
+              m_videobuffer, faceCascasdConfig))
+{
+    open(*m_videoCapture, fileName, cv::VideoCaptureAPIs(apiRef));
+}
+
 
 Application::~Application()
 {

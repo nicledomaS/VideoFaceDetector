@@ -23,26 +23,24 @@ Object::~Object()
 {
 }
 
-void Object::start(const std::shared_ptr<VideoFrame>& frame)
+void Object::start(const std::shared_ptr<VideoFrame>& videoFrame)
 {
-    if(frame)
+    if(videoFrame)
     {
-        m_videoFrame = frame;
-
         std::vector<cv::Rect> faces;
-        m_detector->detectFaces(faces, m_videoFrame->frame);
+        m_detector->detectFaces(faces, videoFrame->frame);
 
         for (const auto& face : faces)
         {
             cv::Point p1(face.x, face.y);
             cv::Point p2(face.x + face.width, face.y + face.height);
 
-            rectangle(m_videoFrame->frame, p1, p2, cv::Scalar( 255, 0, 255 ));
+            rectangle(videoFrame->frame, p1, p2, cv::Scalar( 255, 0, 255 ));
         }
 
-        m_videobuffer->push(m_videoFrame);
-        m_used = false;
+        m_videobuffer->push(videoFrame);
     }
+    m_used = false;
 }
 
 void Object::setUsed(bool used)

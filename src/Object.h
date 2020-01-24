@@ -30,7 +30,7 @@ public:
             const std::shared_ptr<VideoBuffer>& videobuffer);
     ~Object();
 
-    void start(const std::shared_ptr<VideoFrame>& frame);
+    void start(const std::shared_ptr<VideoFrame>& videoFrame);
 
     void setUsed(bool used);
     bool used() const;
@@ -39,6 +39,5 @@ private:
     std::atomic_bool m_used;
     std::unique_ptr<detect_faces::Detector> m_detector;
     std::shared_ptr<VideoBuffer> m_videobuffer;
-    std::shared_ptr<VideoFrame> m_videoFrame;
 };
 
