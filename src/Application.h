@@ -23,15 +23,16 @@ class VideoHandler;
 class Application : private boost::noncopyable
 {
 public:
-    Application(
-            int cameraId,
+    Application(int cameraId,
             int apiRef,
-            const std::string& faceCascasdConfig);
+            const std::string& faceCascasdConfig,
+            int cascadeCount);
 
     Application::Application(
             const std::string& fileName,
             int apiRef,
-            const std::string &faceCascasdConfig);
+            const std::string &faceCascasdConfig,
+            int cascadeCount);
     ~Application();
 
     void run();
