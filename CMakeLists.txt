@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 project(VideoFaceDetector)
 
-add_executable(VideoFaceDetector src/VideoFaceDetector.cpp)
+add_subdirectory(src)
