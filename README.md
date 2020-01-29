@@ -2,6 +2,7 @@
 
 cmake 3.10
 opencv 4.2.0
+boost 
 
 Build opencv:
 ```sh
