@@ -4,6 +4,7 @@ cmake 3.10
 opencv 4.2.0
 
 Build opencv:
+```sh
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D CMAKE_INSTALL_PREFIX=/usr/local \
       -D INSTALL_PYTHON_EXAMPLES=OFF \
@@ -35,6 +36,7 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_PERF_TESTS=ON \
       -D BUILD_EXAMPLES=ON \
       ..
+```
 
 ## Build
 
