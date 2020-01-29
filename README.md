@@ -5,6 +5,10 @@ opencv 4.2.0
 
 Build opencv:
 ```sh
+cd opencv
+mkdir build
+cd build
+
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D CMAKE_INSTALL_PREFIX=/usr/local \
       -D INSTALL_PYTHON_EXAMPLES=OFF \
@@ -36,13 +40,20 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D BUILD_PERF_TESTS=ON \
       -D BUILD_EXAMPLES=ON \
       ..
+cmake --build . -- -j<count cpu>
 ```
 
 ## Build
 
+Download VideoFaceDetector.
+
 ```sh
-cmake -B <path to dir build>
-cmake --build <path to dir build>
+cd VideoFaceDetector
+mkdir build
+cd build
+
+cmake ..
+cmake --build . -- -j<count cpu>
 ```
 
 ## Run
